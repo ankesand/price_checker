@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS 
+	<link r	el="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	-->
+    <title>{{ title }}</title>
+    <style>
+	
+	  .flex-container {
+	    display: flex;
+		flex-direction: column;
+	  }
+	  .flex-item {
+	    flex-grow: 1;
+	  }
+	  
+	  @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	  
+    </style>
+    <!-- Custom styles for this template -->
+  </head>
+  
+  <body>
+  
+    <header>
+    </header>
+
+    <main>
+	<div style="text-align: center;">
+	<!--
+	<div style="width: 75%; justify-content: center; align-items: center; align-content: center; text-align: center;">
+	-->
+	  <div class="flex-container">
+        <h1>Price Checker - New Product Type</h1>
+        <p>Monitor prices of pre-defined products / suppliers - Add new product type to monitor product / prices</p>
+      </div>
+
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: DarkRed; border: 1px solid black;">
+	    <ul style="display: inline-block; list-style: none;">
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('price_checker') }}">price checker</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_price_check') }}">new price check</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_product') }}">new product</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_product_type') }}">new product type</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_supplier') }}">new supplier</a><li>
+		</ul>
+	  </div>
+
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: LightBlue; border: 1px solid black;">
+	    <table>
+		  <tbody>
+			{% if add_new_product_type_status %}
+			<tr>
+			  <td colspan=2>
+			  {{ add_new_product_type_status }}
+			  </td>
+			</tr>
+			{% endif %}
+		    <tr>
+			  <th>product_type_id</th>
+			  <th>product_type</th>
+			</tr>
+            {% for product_type in product_types_all %}
+			<tr>
+			  <td>{{ product_type.product_type_id }}</td>
+			  <td>{{ product_type.product_type }}</td>
+			</tr>
+            {% endfor %}
+			<tr>
+			  <td colspan=2>
+			  ADD NEW:
+			  </td>
+			</tr>
+			<form method="POST" action="{{ url_for('new_product_type') }}">
+              <tr>
+			    {{ product_type.csrf_token }}
+			    <td>{{ product_type.product_type_id }}</td>
+			    <td>{{ product_type.product_type }}</td>
+			  </tr>	
+			  <tr>
+			    <td colspan=2>
+			    {{ product_type.add }}
+			    </td>
+			  <tr>
+            </form>
+	      </tbody>
+		</table>
+	  </div>
+		
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: LightGreen; border: 1px solid black;">
+
+      </div>
+	  
+	</div>
+	</main>
+	
+	<footer>
+      <div class="flex-container">
+        <h3>ankesand.com</a></h3>
+      </div>
+    </footer>
+	
+</html>
