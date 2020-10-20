@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS 
+	<link r	el="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	-->
+    <title>{{ title }}</title>
+    <style>
+	
+	  .flex-container {
+	    display: flex;
+		flex-direction: column;
+	  }
+	  .flex-item {
+	    flex-grow: 1;
+	  }
+	  
+	  @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	  
+    </style>
+    <!-- Custom styles for this template -->
+  </head>
+  
+  <body>
+  
+    <header>
+    </header>
+
+    <main>
+	<div style="text-align: center;">
+	<!--
+	<div style="width: 75%; justify-content: center; align-items: center; align-content: center; text-align: center;">
+	-->
+	  <div class="flex-container">
+        <h1>Price Checker</h1>
+        <p>Monitor prices of pre-defined products / suppliers</p>
+      </div>
+
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: DarkRed; border: 1px solid black;">
+	    <ul style="display: inline-block; list-style: none;">
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('price_checker') }}">price checker</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_price_check') }}">new price check</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_product') }}">new product</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_product_type') }}">new product type</a><li>
+		  <li style="display: inline-block; text-decoration: none;"><a href="{{ url_for('new_supplier') }}">new supplier</a><li>
+		</ul>
+	  </div>
+	  
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: red; border: 1px solid black;">
+	    <form method="POST" action="{{ url_for('price_checker') }}">
+          {{ price_check.csrf_token }}
+		  {{ price_check.product }}
+		  {{ price_check.select }}
+		</form>
+	  </div>
+		
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: red; border: 1px solid black;">
+        <table style="width: auto; height: 100%;">
+          <thead>
+            <tr>
+			  <th>product_name</th>
+			  <th>supplier_name</th>
+			  <th>price_rrp</th>
+			  <th>price_strike</th>
+			  <th>price_min</th>
+			  <th>price_avg</th>
+			  <th>price_max</th>
+			  <th>price_latest</th>
+			  <th>time_latest</th>
+	        </tr>
+          </thead>
+          <tbody>
+            {% for price_check in price_checks_queried %}
+			<tr>
+			  <td>{{ price_check.product_name }}</td>
+			  <td><a href="{{ price_check.url }}">{{ price_check.supplier_name }}</a></td>
+			  <td>{{ "%.2f"|format(price_check.price_rrp) }}</td>
+			  <td>{{ "%.2f"|format(price_check.price_strike) }}</td>
+			  <td>{{ "%.2f"|format(price_check.price_min) }}</td>
+			  <td>{{ "%.2f"|format(price_check.price_avg) }}</td>
+			  <td>{{ "%.2f"|format(price_check.price_max) }}</td>
+			  <td>{{ "%.2f"|format(price_check.price_latest) }}</td>
+			  <td>{{ price_check.time_latest.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+			{% endfor %}
+            </tbody>
+		</table>
+      </div>
+	  	  
+	</div>
+	</main>
+	
+	<footer>
+      <div class="flex-container">
+        <h3>ankesand.com</a></h3>
+      </div>
+    </footer>
+	
+</html>
