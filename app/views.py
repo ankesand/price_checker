@@ -202,3 +202,7 @@ def new_supplier():
                                )
     
     return render_template("new_supplier.html", title = title, supplier = supplier, suppliers_all = suppliers_all)
+
+@app.route("/dummy-route")
+def dummy_route():
+    return "<h3>[Dummy route]</h3>"
